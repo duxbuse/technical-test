@@ -1,8 +1,8 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -11,15 +11,21 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type VersionMessage struct {
+	version       string
+	lastcommitsha string
+	description   string
+}
+
+var versionNumber = os.Getenv("VERSION")
+var lastCommitSha = os.Getenv("LASTCOMMIT")
+var message = VersionMessage{versionNumber, lastCommitSha, "pre-interview technical test"}
+
 func main() {
 	fmt.Println("starting http server ")
 
-	versionNumber := os.Getenv("VERSION")
-	lastCommitSha := os.Getenv("LASTCOMMIT")
-	message := VersionMessage{versionNumber, lastCommitSha, "pre-interview technical test"}
-
 	r := mux.NewRouter()
-	r.HandleFunc("/version", VersionInfo(message))
+	r.HandleFunc("/version", VersionHandler)
 
 	s := &http.Server{
 		Handler:      r,
@@ -31,12 +37,6 @@ func main() {
 	log.Fatal(s.ListenAndServe())
 }
 
-type VersionMessage struct {
-	version       string
-	lastcommitsha string
-	description   string
-}
-
 /*
 --- EXAMPLE OUPUT ---
 "myapplication": [
@@ -46,6 +46,9 @@ type VersionMessage struct {
 "description" : "pre-interview technical test"
 } ]
 */
-func VersionInfo(w http.ResponseWriter, r *http.Request, info VersionMessage) {
-	json.NewEncoder(w).Encode(info)
+func VersionHandler(w http.ResponseWriter, r *http.Request) {
+	// json.NewEncoder(w).Encode(message)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	io.WriteString(w, `{"alive": true}`)
 }

@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestVersionInfo(t *testing.T) {
+func TestVersionHandler(t *testing.T) {
 	// Create a request to pass to our handler. We don't have any query parameters for now, so we'll
 	// pass 'nil' as the third parameter.
 	req, err := http.NewRequest("GET", "/version", nil)
@@ -15,7 +15,7 @@ func TestVersionInfo(t *testing.T) {
 	}
 
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(VersionInfo)
+	handler := http.HandlerFunc(VersionHandler)
 
 	handler.ServeHTTP(rr, req)
 
@@ -28,7 +28,7 @@ func TestVersionInfo(t *testing.T) {
 	// Check the response body is what we expect.
 	expected := `{"alive": true}`
 	if rr.Body.String() != expected {
-		t.Errorf("handler returned unexpected body: got %v want %v",
+		t.Errorf("handler returned unexpected body:\n got %v\nwant %v",
 			rr.Body.String(), expected)
 	}
 }
