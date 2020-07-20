@@ -21,14 +21,14 @@ var LastCommitSha string
 var Message = VersionMessage{VersionNumber, LastCommitSha, "pre-interview technical test"}
 
 func main() {
-	fmt.Println("starting http server ")
+	fmt.Println("Starting http server")
 
 	r := mux.NewRouter()
 	r.HandleFunc("/version", VersionHandler)
 
 	s := &http.Server{
 		Handler:      r,
-		Addr:         "127.0.0.1:8000",
+		Addr:         "localhost:8000",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
@@ -37,6 +37,9 @@ func main() {
 }
 
 func VersionHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Serving Version info:")
+	fmt.Println(Message)
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(Message)
