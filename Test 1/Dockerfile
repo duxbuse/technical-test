@@ -8,7 +8,7 @@ FROM golang:1.14-alpine as builder
     RUN go mod verify
 
     COPY main.go /app/
-    RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /app/golang-test
+    RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o /app/golang-test
 
 FROM scratch
     COPY --from=builder /app/golang-test /app/golang-test
