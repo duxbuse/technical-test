@@ -19,24 +19,31 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Install & Tests
         run: |
           cd "Test 2"
           go test
-      - name: Bump version and push tag
-        uses: hennejg/github-tag-action@v4.1.jh5
-        with:
-          github_token: ${{ secrets.TAG_TOKEN }}
+
   cd:
     runs-on: ubuntu-latest
     needs: ci
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Bump version and push tag
+        id: tag
+        uses: hennejg/github-tag-action@v4.1.jh5
+        with:
+          github_token: ${{ secrets.TAG_TOKEN }}
+
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/test2:${{ github.sha }} -t ${{ secrets.DOCKER_USER }}/test2:latest ./Test 2/Dockerfile --build-arg VERSION=${{ needs.ci.outputs.new_version }} --build-arg COMMITSHA=${{ github.sha }}
+        run: docker build -t ${{ secrets.DOCKER_USER }}/test2:${{ github.sha }} -t ${{ secrets.DOCKER_USER }}/test2:latest --build-arg VERSION=${{ steps.tag.outputs.new_version }} --build-arg COMMITSHA=${{ github.sha }} "./Test 2/Dockerfile"
+
       - name: Push
         run: |
           docker push ${{ secrets.DOCKER_USER }}/test2:${{ github.sha }}
