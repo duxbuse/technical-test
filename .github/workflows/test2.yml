@@ -21,8 +21,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install & Tests
         run: |
-          cd Test 2
-          go install
+          cd "Test 2"
           go test
       - name: Bump version and push tag
         uses: hennejg/github-tag-action@v4.1.jh1
