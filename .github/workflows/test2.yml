@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install & Tests
+      - name: Run Tests
         run: |
           cd "Test 2"
           go test
@@ -42,7 +42,7 @@ jobs:
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/test2:${{ github.sha }} -t ${{ secrets.DOCKER_USER }}/test2:latest --build-arg VERSION=${{ steps.tag.outputs.new_version }} --build-arg COMMITSHA=${{ github.sha }} "./Test 2/Dockerfile"
+        run: docker build -t ${{ secrets.DOCKER_USER }}/test2:${{ github.sha }} -t ${{ secrets.DOCKER_USER }}/test2:latest --build-arg VERSION=${{ steps.tag.outputs.new_version }} --build-arg COMMITSHA=${{ github.sha }} "Test 2/"
 
       - name: Push
         run: |
