@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: TEST2 CI/CD PIPELINE
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -21,6 +21,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install & Tests
         run: |
+          cd Test 2
           go install
           go test
   cd:
@@ -32,7 +33,7 @@ jobs:
       - name: Docker login
         run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
       - name: Build
-        run: docker build -t builtImage .
+        run: docker build -t builtImage ./Test 2/Dockerfile
       - name: Tags
         run: |
           docker tag builtImage ${{ secrets.DOCKER_USER }}/test2:${{ github.sha }}
