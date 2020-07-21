@@ -14,13 +14,13 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    container:
-      image: golang
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Source
+        uses: actions/checkout@v2
 
       - name: Run Tests
+        uses: golang
         run: |
           cd "Test 2"
           go test -v -cover
@@ -28,7 +28,6 @@ jobs:
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v1
         with:
-          # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
           version: v1.28
           working-directory: "Test 2"
 
