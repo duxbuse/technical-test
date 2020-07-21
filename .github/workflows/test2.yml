@@ -29,14 +29,14 @@ jobs:
         uses: golangci/golangci-lint-action@v1
         with:
           # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
-          version: v1.28
+          version: v
           working-directory: "Test 2"
 
 
       - name: Run Gosec Security Scanner
-        uses: securego/gosec@master
+        uses: ynniss/golang-security-action@master
         with:
-          args: ./Test 2/...
+          CODE_PATH: "./Test 2/"
 
   cd:
     runs-on: ubuntu-latest
