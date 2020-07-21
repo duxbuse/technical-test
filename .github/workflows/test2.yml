@@ -35,7 +35,7 @@ jobs:
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
         with:
-          args: "."
+          args: "./..."
           working-directory: "Test 2"
 
   cd:
