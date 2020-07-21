@@ -20,6 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Run Tests
+        run: |
+          cd "Test 2"
+          go test -v -cover
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v1
         with:
@@ -27,10 +32,6 @@ jobs:
           version: v2.0
           working-directory: "Test 2"
 
-      - name: Run Tests
-        run: |
-          cd "Test 2"
-          go test -v -cover
 
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
