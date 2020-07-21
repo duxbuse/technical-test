@@ -6,7 +6,7 @@ Simple Go webserver that presents a `/version` endpoint detailing the current ve
 
 ## Pipeline
 
-There are 2 main stages to the pipeline:
+There are 2 main stages to the pipeline and its all handled using GITHUB ACTIONS. The description of the stages can be found [here](../.github/workflows/test2.yml)
 
 ### CI
 
