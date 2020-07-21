@@ -12,6 +12,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+
   ci:
     runs-on: ubuntu-latest
     container:
@@ -38,9 +39,21 @@ jobs:
         with:
           args: "Test 2"
 
+  sec-test:
+    runs-on: ubuntu-latest
+    env:
+      GO111MODULE: on
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v2
+      - name: Run Gosec Security Scanner
+        uses: securego/gosec@master
+        with:
+          args: ./Test 2
+
   cd:
     runs-on: ubuntu-latest
-    needs: ci
+    needs: [ci, sec-test]
 
     steps:
       - uses: actions/checkout@v2
