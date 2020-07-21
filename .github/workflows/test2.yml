@@ -23,7 +23,12 @@ jobs:
       - name: Run Tests
         run: |
           cd "Test 2"
-          go test
+          go test -v -cover
+
+      - name: Run Gosec Security Scanner
+        uses: securego/gosec@master
+        with:
+          args: ./Test 2/...
 
   cd:
     runs-on: ubuntu-latest

@@ -42,5 +42,8 @@ func VersionHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(Message)
+	err := json.NewEncoder(w).Encode(Message)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
