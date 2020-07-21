@@ -33,12 +33,6 @@ jobs:
           version: v1.28
           working-directory: "Test 2"
 
-
-      - name: Run Gosec Security Scanner
-        uses: securego/gosec@v2.2.0
-        with:
-          args: "Test 2"
-
   sec-test:
     runs-on: ubuntu-latest
     env:
@@ -46,6 +40,13 @@ jobs:
     steps:
       - name: Checkout Source
         uses: actions/checkout@v2
+
+      - name: Go Build
+        uses: golang
+        run: |
+          cd "Test 2"
+          go install
+
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
         with:
