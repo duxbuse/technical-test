@@ -14,13 +14,13 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    container:
+      image: golang
 
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Run Tests
-        uses: golang
         run: |
           cd "Test 2"
           go test -v -cover
@@ -35,7 +35,8 @@ jobs:
       - name: Run Gosec Security Scanner
         uses: securego/gosec@master
         with:
-          args: "./Test 2/..."
+          # args: "./Test 2/..."
+          args: "./Test 2/"
 
   cd:
     runs-on: ubuntu-latest
