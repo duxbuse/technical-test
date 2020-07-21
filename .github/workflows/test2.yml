@@ -34,9 +34,9 @@ jobs:
 
 
       - name: Run Gosec Security Scanner
-        uses: securego/gosec@v2.2.0
+        uses: securego/gosec@master
         with:
-          args: "./Test 2"
+          args: "./Test 2/..."
 
   cd:
     runs-on: ubuntu-latest
